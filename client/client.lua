@@ -251,7 +251,7 @@ AddEventHandler('fezz_windowtint:checkTint', function()
     end
 end)
 
-function CheckTint()
+function CheckTint(entity)
     if Config.AllowEveryone then
         local vehicle, distance = ESX.Game.GetClosestVehicle()
         if vehicle and distance <= 5 then
@@ -359,4 +359,43 @@ function CheckTint()
     else
         ESX.ShowNotification("You are not a cop")
     end
+end
+
+if Config.Target then
+    exports.ox_target:addGlobalVehicle({
+        {
+            name = 'fezz_windowtint:targetCheckTint',
+            icon = 'fa-solid fa-car-side',
+            label = 'Check Window tint',
+            bones = { 'door_dside_f', 'seat_dside_f' },
+            canInteract = function(entity, distance, coords, name)
+                if ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
+                    if GetVehicleDoorLockStatus(entity) > 1 then return end
+
+                    local boneId = GetEntityBoneIndexByName(entity, 'door_dside_f')
+
+                    if boneId ~= -1 then
+                        return #(coords - GetWorldPositionOfEntityBone(entity, boneId)) < 0.5 or #(coords - GetWorldPositionOfEntityBone(entity, GetEntityBoneIndexByName(entity, 'seat_dside_f'))) < 0.72
+                    end
+                end
+            end,
+            onSelect = function(data)
+                if Config.Item then
+                    ESX.TriggerServerCallback('fezz_windowtint:getItemAmount', function(quantity)
+                        if quantity > 0 then
+                            TriggerEvent('fezz_windowtint:checkTint', data.entity)
+                        else
+                            ESX.ShowNotification("You don't have a window tint checker")
+                        end
+                    end, 'tintchecker')
+                else
+                    TriggerEvent('fezz_windowtint:checkTint', data.entity)
+                end
+            end
+        }
+    })
+    AddEventHandler('onResourceStop', function(resourceName)
+        if (GetCurrentResourceName() ~= resourceName) then return end
+        exports.ox_target:removeGlobalVehicle("fezz_windowtint:targetCheckTint")
+    end)
 end

@@ -1,4 +1,6 @@
 Config = {}
 
-Config.AllowEveryone = false -- Enable to allow everyone to use the item / command
+Config.AllowEveryone = true -- Enable to allow everyone to use the item / command
 Config.EnableCommand = true -- Enable or Disable the checktint command
+Config.Target = false -- Enable to use ox_target
+Config.Item = false -- Enable if you use the window tint as an item

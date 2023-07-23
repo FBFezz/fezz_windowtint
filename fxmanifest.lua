@@ -4,7 +4,7 @@ lua54 'yes'
 
 author 'Fezz | fbfezz (on discord)'
 description 'Fezz Window Tint Checker'
-version '1.0.0'
+version '1.0.1'
 
 ui_page 'html/index.html'
 

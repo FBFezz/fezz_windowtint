@@ -24,7 +24,7 @@ $(function () {
     })
 
     document.onkeyup = function (data) {
-        if (data.which == 27) {
+        if ((data.which == 27) || (data.which == 8)) {
             $.post('http://fezz_windowtint/exit', JSON.stringify({}));
             return
         }

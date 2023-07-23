@@ -33,6 +33,11 @@ if Config.EnableCommand then
         if Config.AllowEveryone then
             local vehicle, distance = ESX.Game.GetClosestVehicle()
             if vehicle and distance <= 5 then
+                if Config.Animation then
+                    RequestAnimDict("cellphone@")
+                    while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
+                    TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
+                end
                 SetDisplay(true)
 
                 if GetVehicleWindowTint(vehicle) == -1  then
@@ -85,6 +90,11 @@ if Config.EnableCommand then
         elseif ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
             local vehicle, distance = ESX.Game.GetClosestVehicle()
             if vehicle and distance <= 5 then
+                if Config.Animation then
+                    RequestAnimDict("cellphone@")
+                    while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
+                    TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
+                end
                 SetDisplay(true)
 
                 if GetVehicleWindowTint(vehicle) == -1  then
@@ -145,6 +155,11 @@ AddEventHandler('fezz_windowtint:checkTint', function()
     if Config.AllowEveryone then
         local vehicle, distance = ESX.Game.GetClosestVehicle()
         if vehicle and distance <= 5 then
+            if Config.Animation then
+                RequestAnimDict("cellphone@")
+                while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
+                TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
+            end
             SetDisplay(true)
 
             if GetVehicleWindowTint(vehicle) == -1  then
@@ -197,6 +212,11 @@ AddEventHandler('fezz_windowtint:checkTint', function()
     elseif ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
         local vehicle, distance = ESX.Game.GetClosestVehicle()
         if vehicle and distance <= 5 then
+            if Config.Animation then
+                RequestAnimDict("cellphone@")
+                while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
+                TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
+            end
             SetDisplay(true)
 
             if GetVehicleWindowTint(vehicle) == -1  then
@@ -255,6 +275,11 @@ function CheckTint(entity)
     if Config.AllowEveryone then
         local vehicle, distance = ESX.Game.GetClosestVehicle()
         if vehicle and distance <= 5 then
+            if Config.Animation then
+                RequestAnimDict("cellphone@")
+                while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
+                TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
+            end
             SetDisplay(true)
 
             if GetVehicleWindowTint(vehicle) == -1  then
@@ -307,6 +332,11 @@ function CheckTint(entity)
     elseif ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
         local vehicle, distance = ESX.Game.GetClosestVehicle()
         if vehicle and distance <= 5 then
+            if Config.Animation then
+                RequestAnimDict("cellphone@")
+                while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
+                TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
+            end
             SetDisplay(true)
 
             if GetVehicleWindowTint(vehicle) == -1  then

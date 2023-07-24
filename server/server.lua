@@ -1,10 +1,8 @@
-ESX.RegisterUsableItem('tintchecker', function(source)
-    TriggerClientEvent("fezz_windowtint:checkTint", source)
-end)
+local QBCore = exports['qb-core']:GetCoreObject()
 
-ESX.RegisterServerCallback('fezz_windowtint:getItemAmount', function(source, cb, item)
-	local xPlayer = ESX.GetPlayerFromId(source)
-	local quantity = xPlayer.getInventoryItem(item).count
-
-	cb(quantity)
+QBCore.Functions.CreateUseableItem('tintchecker', function(source, item)
+	local Player = QBCore.Functions.GetPlayer(source)
+	if Player.Functions.GetItemByName(item.name) ~= nil then
+    	TriggerClientEvent("fezz_windowtint:checkTint", source)
+	end
 end)

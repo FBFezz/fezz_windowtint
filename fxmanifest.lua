@@ -15,11 +15,8 @@ files {
 
 client_script 'client/*.lua'
 
-shared_scripts {
-	'@es_extended/imports.lua',
-    'config.lua'
-}
+shared_script 'config.lua'
 
 server_script 'server/*.lua'
 
-dependency 'es_extended'
+dependency 'qb-core'

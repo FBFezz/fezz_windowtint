@@ -1,3 +1,14 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+local PlayerJob = {}
+
+RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
+    PlayerJob = QBCore.Functions.GetPlayerData().job
+end)
+
+RegisterNetEvent('QBCore:Client:OnJobUpdate', function(JobInfo)
+    PlayerJob = JobInfo
+end)
+
 local tint = nil
 Display = false
 
@@ -31,7 +42,7 @@ end)
 if Config.EnableCommand then
     RegisterCommand("checktint", function()
         if Config.AllowEveryone then
-            local vehicle, distance = ESX.Game.GetClosestVehicle()
+            local vehicle, distance = QBCore.Functions.GetClosestVehicle()
             if vehicle and distance <= 5 then
                 if Config.Animation then
                     RequestAnimDict("cellphone@")
@@ -84,11 +95,11 @@ if Config.EnableCommand then
                     })
                 end
             else
-                ESX.ShowNotification("No Vehicle Nearby")
+                QBCore.Functions.Notify("No Vehicle Nearby")
             end
             FreezeEntityPosition(PlayerPedId(), false)
-        elseif ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
-            local vehicle, distance = ESX.Game.GetClosestVehicle()
+        elseif QBCore.Functions.GetPlayerData().job.name == 'police' then
+            local vehicle, distance = QBCore.Functions.GetClosestVehicle()
             if vehicle and distance <= 5 then
                 if Config.Animation then
                     RequestAnimDict("cellphone@")
@@ -141,11 +152,11 @@ if Config.EnableCommand then
                     })
                 end
             else
-                ESX.ShowNotification("No Vehicle Nearby")
+                QBCore.Functions.Notify("No Vehicle Nearby")
             end
             FreezeEntityPosition(PlayerPedId(), false)
         else
-            ESX.ShowNotification("You are not a cop")
+            QBCore.Functions.Notify("You are not a cop")
         end
     end, false)
 end
@@ -153,7 +164,7 @@ end
 RegisterNetEvent('fezz_windowtint:checkTint')
 AddEventHandler('fezz_windowtint:checkTint', function()
     if Config.AllowEveryone then
-        local vehicle, distance = ESX.Game.GetClosestVehicle()
+        local vehicle, distance = QBCore.Functions.GetClosestVehicle()
         if vehicle and distance <= 5 then
             if Config.Animation then
                 RequestAnimDict("cellphone@")
@@ -206,11 +217,11 @@ AddEventHandler('fezz_windowtint:checkTint', function()
                 })
             end
         else
-            ESX.ShowNotification("No Vehicle Nearby")
+            QBCore.Functions.Notify("No Vehicle Nearby")
         end
         FreezeEntityPosition(PlayerPedId(), false)
-    elseif ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
-        local vehicle, distance = ESX.Game.GetClosestVehicle()
+    elseif QBCore.Functions.GetPlayerData().job.name == 'police' then
+        local vehicle, distance = QBCore.Functions.GetClosestVehicle()
         if vehicle and distance <= 5 then
             if Config.Animation then
                 RequestAnimDict("cellphone@")
@@ -263,17 +274,17 @@ AddEventHandler('fezz_windowtint:checkTint', function()
                 })
             end
         else
-            ESX.ShowNotification("No Vehicle Nearby")
+            QBCore.Functions.Notify("No Vehicle Nearby")
         end
         FreezeEntityPosition(PlayerPedId(), false)
     else
-        ESX.ShowNotification("You are not a cop")
+        QBCore.Functions.Notify("You are not a cop")
     end
 end)
 
 function CheckTint(entity)
     if Config.AllowEveryone then
-        local vehicle, distance = ESX.Game.GetClosestVehicle()
+        local vehicle, distance = QBCore.Functions.GetClosestVehicle()
         if vehicle and distance <= 5 then
             if Config.Animation then
                 RequestAnimDict("cellphone@")
@@ -326,11 +337,11 @@ function CheckTint(entity)
                 })
             end
         else
-            ESX.ShowNotification("No Vehicle Nearby")
+            QBCore.Functions.Notify("No Vehicle Nearby")
         end
         FreezeEntityPosition(PlayerPedId(), false)
-    elseif ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
-        local vehicle, distance = ESX.Game.GetClosestVehicle()
+    elseif QBCore.Functions.GetPlayerData().job.name == 'police' then
+        local vehicle, distance = QBCore.Functions.GetClosestVehicle()
         if vehicle and distance <= 5 then
             if Config.Animation then
                 RequestAnimDict("cellphone@")
@@ -383,49 +394,48 @@ function CheckTint(entity)
                 })
             end
         else
-            ESX.ShowNotification("No Vehicle Nearby")
+            QBCore.Functions.Notify("No Vehicle Nearby")
         end
         FreezeEntityPosition(PlayerPedId(), false)
     else
-        ESX.ShowNotification("You are not a cop")
+        QBCore.Functions.Notify("You are not a cop")
     end
 end
 
 if Config.Target then
-    exports.ox_target:addGlobalVehicle({
-        {
-            name = 'fezz_windowtint:targetCheckTint',
-            icon = 'fa-solid fa-car-side',
-            label = 'Check Window tint',
-            bones = { 'door_dside_f', 'seat_dside_f' },
-            canInteract = function(entity, distance, coords, name)
-                if ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
-                    if GetVehicleDoorLockStatus(entity) > 1 then return end
-
-                    local boneId = GetEntityBoneIndexByName(entity, 'door_dside_f')
-
-                    if boneId ~= -1 then
-                        return #(coords - GetWorldPositionOfEntityBone(entity, boneId)) < 0.5 or #(coords - GetWorldPositionOfEntityBone(entity, GetEntityBoneIndexByName(entity, 'seat_dside_f'))) < 0.72
-                    end
-                end
-            end,
-            onSelect = function(data)
-                if Config.Item then
-                    ESX.TriggerServerCallback('fezz_windowtint:getItemAmount', function(quantity)
-                        if quantity > 0 then
-                            TriggerEvent('fezz_windowtint:checkTint', data.entity)
+    exports['qb-target']:AddGlobalVehicle({
+        options = {
+            {
+                num = 1,
+                type = "client",
+                event = 'fezz_windowtint:targetCheckTint',
+                icon = 'fa-solid fa-car-side',
+                label = 'Check Window tint',
+                targeticon = "fa-solid fa-car-side",
+                action = function(entity)
+                    if IsPedAPlayer(entity) then return false end
+                    if Config.Item then
+                        local hasItem = QBCore.Functions.HasItem('tintchecker')
+                        if hasItem then
+                            TriggerEvent('fezz_windowtint:checkTint', entity)
                         else
-                            ESX.ShowNotification("You don't have a window tint checker")
+                            QBCore.Functions.Notify("You don't have a window tint checker")
                         end
-                    end, 'tintchecker')
-                else
-                    TriggerEvent('fezz_windowtint:checkTint', data.entity)
-                end
-            end
-        }
+                    else
+                        TriggerEvent('fezz_windowtint:checkTint', entity)
+                    end
+                end,
+                canInteract = function(entity, distance, data)
+                    if IsPedAPlayer(entity) then return false end -- This will return false if the entity interacted with is a player and otherwise returns true
+                    return true
+                end,
+                job = 'police'
+            }
+        },
+        distance = 2.5
     })
     AddEventHandler('onResourceStop', function(resourceName)
         if (GetCurrentResourceName() ~= resourceName) then return end
-        exports.ox_target:removeGlobalVehicle("fezz_windowtint:targetCheckTint")
+        exports['qb-target']:RemoveGlobalVehicle('fezz_windowtint:targetCheckTint')
     end)
 end

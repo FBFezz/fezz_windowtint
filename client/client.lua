@@ -87,63 +87,67 @@ if Config.EnableCommand then
                 ESX.ShowNotification("No Vehicle Nearby")
             end
             FreezeEntityPosition(PlayerPedId(), false)
-        elseif ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
-            local vehicle, distance = ESX.Game.GetClosestVehicle()
-            if vehicle and distance <= 5 then
-                if Config.Animation then
-                    RequestAnimDict("cellphone@")
-                    while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
-                    TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
-                end
-                SetDisplay(true)
+        elseif not Config.AllowEveryone then
+            for i=1, #Config.policeJobs do
+                if Config.policeJobs[i] == ESX.PlayerData.job.name then
+                    local vehicle, distance = ESX.Game.GetClosestVehicle()
+                    if vehicle and distance <= 5 then
+                        if Config.Animation then
+                            RequestAnimDict("cellphone@")
+                            while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
+                            TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
+                        end
+                        SetDisplay(true)
 
-                if GetVehicleWindowTint(vehicle) == -1  then
-                    SendNUIMessage({    
-                        type = "data",
-                        tint = 'None',
-                        textColor = '--color-black'
-                    })
-                elseif GetVehicleWindowTint(vehicle) == 0 then
-                    SendNUIMessage({
-                        type = "data",
-                        tint = 'Stock',
-                        textColor = '--color-black'
-                    })
-                elseif GetVehicleWindowTint(vehicle) == 1 then
-                    SendNUIMessage({
-                        type = "data",
-                        tint = 'Pure Black',
-                        textColor = '--color-red'
-                    })
-                elseif GetVehicleWindowTint(vehicle) == 2 then
-                    SendNUIMessage({
-                        type = "data",
-                        tint = 'Dark Smoke',
-                        textColor = '--color-black'
-                    })
-                elseif GetVehicleWindowTint(vehicle) == 3 then
-                    SendNUIMessage({
-                        type = "data",
-                        tint = 'Light Smoke',
-                        textColor = '--color-black'
-                    })
-                elseif GetVehicleWindowTint(vehicle) == 4 then
-                    SendNUIMessage({
-                        type = "data",
-                        tint = 'Limo',
-                        textColor = '--color-black'
-                    })
-                elseif GetVehicleWindowTint(vehicle) == 5 then
-                    SendNUIMessage({
-                        type = "data",
-                        tint = 'Green',
-                        textColor = '--color-black'
-                    })
+                        if GetVehicleWindowTint(vehicle) == -1  then
+                            SendNUIMessage({    
+                                type = "data",
+                                tint = 'None',
+                                textColor = '--color-black'
+                            })
+                        elseif GetVehicleWindowTint(vehicle) == 0 then
+                            SendNUIMessage({
+                                type = "data",
+                                tint = 'Stock',
+                                textColor = '--color-black'
+                            })
+                        elseif GetVehicleWindowTint(vehicle) == 1 then
+                            SendNUIMessage({
+                                type = "data",
+                                tint = 'Pure Black',
+                                textColor = '--color-red'
+                            })
+                        elseif GetVehicleWindowTint(vehicle) == 2 then
+                            SendNUIMessage({
+                                type = "data",
+                                tint = 'Dark Smoke',
+                                textColor = '--color-black'
+                            })
+                        elseif GetVehicleWindowTint(vehicle) == 3 then
+                            SendNUIMessage({
+                                type = "data",
+                                tint = 'Light Smoke',
+                                textColor = '--color-black'
+                            })
+                        elseif GetVehicleWindowTint(vehicle) == 4 then
+                            SendNUIMessage({
+                                type = "data",
+                                tint = 'Limo',
+                                textColor = '--color-black'
+                            })
+                        elseif GetVehicleWindowTint(vehicle) == 5 then
+                            SendNUIMessage({
+                                type = "data",
+                                tint = 'Green',
+                                textColor = '--color-black'
+                            })
+                        end
+                    else
+                        ESX.ShowNotification("No Vehicle Nearby")
+                    end
+                    FreezeEntityPosition(PlayerPedId(), false)
                 end
-            else
-                ESX.ShowNotification("No Vehicle Nearby")
             end
-            FreezeEntityPosition(PlayerPedId(), false)
         else
             ESX.ShowNotification("You are not a cop")
         end
@@ -209,63 +213,67 @@ AddEventHandler('fezz_windowtint:checkTint', function()
             ESX.ShowNotification("No Vehicle Nearby")
         end
         FreezeEntityPosition(PlayerPedId(), false)
-    elseif ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
-        local vehicle, distance = ESX.Game.GetClosestVehicle()
-        if vehicle and distance <= 5 then
-            if Config.Animation then
-                RequestAnimDict("cellphone@")
-                while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
-                TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
-            end
-            SetDisplay(true)
+    elseif not Config.AllowEveryone then
+        for i=1, #Config.policeJobs do
+            if Config.policeJobs[i] == ESX.PlayerData.job.name then
+                local vehicle, distance = ESX.Game.GetClosestVehicle()
+                if vehicle and distance <= 5 then
+                    if Config.Animation then
+                        RequestAnimDict("cellphone@")
+                        while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
+                        TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
+                    end
+                    SetDisplay(true)
 
-            if GetVehicleWindowTint(vehicle) == -1  then
-                SendNUIMessage({    
-                    type = "data",
-                    tint = 'None',
-                    textColor = '--color-black'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 0 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Stock',
-                    textColor = '--color-black'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 1 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Pure Black',
-                    textColor = '--color-red'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 2 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Dark Smoke',
-                    textColor = '--color-black'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 3 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Light Smoke',
-                    textColor = '--color-black'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 4 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Limo',
-                    textColor = '--color-black'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 5 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Green',
-                    textColor = '--color-black'
-                })
+                    if GetVehicleWindowTint(vehicle) == -1  then
+                        SendNUIMessage({    
+                            type = "data",
+                            tint = 'None',
+                            textColor = '--color-black'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 0 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Stock',
+                            textColor = '--color-black'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 1 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Pure Black',
+                            textColor = '--color-red'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 2 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Dark Smoke',
+                            textColor = '--color-black'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 3 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Light Smoke',
+                            textColor = '--color-black'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 4 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Limo',
+                            textColor = '--color-black'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 5 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Green',
+                            textColor = '--color-black'
+                        })
+                    end
+                else
+                    ESX.ShowNotification("No Vehicle Nearby")
+                end
+                FreezeEntityPosition(PlayerPedId(), false)
             end
-        else
-            ESX.ShowNotification("No Vehicle Nearby")
         end
-        FreezeEntityPosition(PlayerPedId(), false)
     else
         ESX.ShowNotification("You are not a cop")
     end
@@ -329,63 +337,67 @@ function CheckTint(entity)
             ESX.ShowNotification("No Vehicle Nearby")
         end
         FreezeEntityPosition(PlayerPedId(), false)
-    elseif ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
-        local vehicle, distance = ESX.Game.GetClosestVehicle()
-        if vehicle and distance <= 5 then
-            if Config.Animation then
-                RequestAnimDict("cellphone@")
-                while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
-                TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
-            end
-            SetDisplay(true)
+    elseif not Config.AllowEveryone then
+        for i=1, #Config.policeJobs do
+            if Config.policeJobs[i] == ESX.PlayerData.job.name then
+                local vehicle, distance = ESX.Game.GetClosestVehicle()
+                if vehicle and distance <= 5 then
+                    if Config.Animation then
+                        RequestAnimDict("cellphone@")
+                        while (not HasAnimDictLoaded("cellphone@")) do Wait(0) end
+                        TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_text_read_base', 8.0, -8, 5000, 49, 0, false, false, false)
+                    end
+                    SetDisplay(true)
 
-            if GetVehicleWindowTint(vehicle) == -1  then
-                SendNUIMessage({    
-                    type = "data",
-                    tint = 'None',
-                    textColor = '--color-black'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 0 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Stock',
-                    textColor = '--color-black'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 1 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Pure Black',
-                    textColor = '--color-red'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 2 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Dark Smoke',
-                    textColor = '--color-black'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 3 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Light Smoke',
-                    textColor = '--color-black'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 4 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Limo',
-                    textColor = '--color-black'
-                })
-            elseif GetVehicleWindowTint(vehicle) == 5 then
-                SendNUIMessage({
-                    type = "data",
-                    tint = 'Green',
-                    textColor = '--color-black'
-                })
+                    if GetVehicleWindowTint(vehicle) == -1  then
+                        SendNUIMessage({    
+                            type = "data",
+                            tint = 'None',
+                            textColor = '--color-black'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 0 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Stock',
+                            textColor = '--color-black'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 1 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Pure Black',
+                            textColor = '--color-red'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 2 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Dark Smoke',
+                            textColor = '--color-black'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 3 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Light Smoke',
+                            textColor = '--color-black'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 4 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Limo',
+                            textColor = '--color-black'
+                        })
+                    elseif GetVehicleWindowTint(vehicle) == 5 then
+                        SendNUIMessage({
+                            type = "data",
+                            tint = 'Green',
+                            textColor = '--color-black'
+                        })
+                    end
+                else
+                    ESX.ShowNotification("No Vehicle Nearby")
+                end
+                FreezeEntityPosition(PlayerPedId(), false)
             end
-        else
-            ESX.ShowNotification("No Vehicle Nearby")
         end
-        FreezeEntityPosition(PlayerPedId(), false)
     else
         ESX.ShowNotification("You are not a cop")
     end
@@ -399,13 +411,15 @@ if Config.Target then
             label = 'Check Window tint',
             bones = { 'door_dside_f', 'seat_dside_f' },
             canInteract = function(entity, distance, coords, name)
-                if ESX.PlayerData.job and ESX.PlayerData.job.name == 'police' then
-                    if GetVehicleDoorLockStatus(entity) > 1 then return end
+                for i=1, #Config.policeJobs do
+                    if Config.policeJobs[i] == ESX.PlayerData.job.name then
+                        if GetVehicleDoorLockStatus(entity) > 1 then return end
 
-                    local boneId = GetEntityBoneIndexByName(entity, 'door_dside_f')
+                        local boneId = GetEntityBoneIndexByName(entity, 'door_dside_f')
 
-                    if boneId ~= -1 then
-                        return #(coords - GetWorldPositionOfEntityBone(entity, boneId)) < 0.5 or #(coords - GetWorldPositionOfEntityBone(entity, GetEntityBoneIndexByName(entity, 'seat_dside_f'))) < 0.72
+                        if boneId ~= -1 then
+                            return #(coords - GetWorldPositionOfEntityBone(entity, boneId)) < 0.5 or #(coords - GetWorldPositionOfEntityBone(entity, GetEntityBoneIndexByName(entity, 'seat_dside_f'))) < 0.72
+                        end
                     end
                 end
             end,

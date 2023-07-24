@@ -12,6 +12,11 @@ ensure fezz_windowtint
 ```
 
 ## Directions to use
+- Put this into qb-core > shared > items.lua
+```lua
+['tintchecker']                     = {['name'] = 'tintchecker',                       ['label'] = 'Window Tint Checker',       ['weight'] = 0,            ['type'] = 'item',         ['image'] = 'windowtint.png',              ['unique'] = false,         ['useable'] = true,      ['shouldClose'] = true,      ['combinable'] = nil,   ['description'] = 'Check a Vehicles Window Tint'},
+```
+
 - if you are using ox inv, insert this into the data - items.lua file
 Ox Inventory items - Image for the item is in html - windowtint.png
 ```lua
@@ -24,30 +29,7 @@ Ox Inventory items - Image for the item is in html - windowtint.png
 		},
 	},
 ```
-- If you want to use this with esx_policejob job menu go to line 323 in main.lua (client) and find 
-```lua
-elements3[#elements3+1] = {icon = "fas fa-car", title = TranslateCap('impound'), value = 'impound'}
-```
-
-and make it look like this 
-```lua 
-elements3[#elements3+1] = {icon = "fas fa-car", title = TranslateCap('impound'), value = 'impound'}
-elements3[#elements3+1] = {icon = "fas fa-car", title = "Check Window tint", value = 'checkTint'}
-```
-
-Then go to line 343 and to where it says
-```lua 
-if action == 'vehicle_infos' then
-	local vehicleData = ESX.Game.GetVehicleProperties(vehicle)
-	OpenVehicleInfosMenu(vehicleData)
-```
-
-and make it look like this
-```lua
-if action == 'vehicle_infos' then
-	local vehicleData = ESX.Game.GetVehicleProperties(vehicle)
-	OpenVehicleInfosMenu(vehicleData)
-elseif action == 'checkTint' then
+- If you want to use this in policejob or other scripts, you can use this event
+	```lua 
 	exports.fezz_windowtint:CheckTint(vehicle)
-end
-```
+	```

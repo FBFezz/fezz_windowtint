@@ -13,7 +13,7 @@ ensure fezz_windowtint
 
 ## Directions to use
 - if you are using ox inv, insert this into the data - items.lua file
-Ox Inventory items - Images for items are in the images folder
+Ox Inventory items - Image for the item is in html - windowtint.png
 ```lua
 	['tintchecker'] = {
 		label = 'Window Tint Checker',

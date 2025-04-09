@@ -16,10 +16,12 @@ files {
 client_script 'client/*.lua'
 
 shared_scripts {
-	'@es_extended/imports.lua',
+    '@es_extended/imports.lua',
     'config.lua'
 }
 
 server_script 'server/*.lua'
+
+export 'CheckTint'
 
 dependency 'es_extended'
